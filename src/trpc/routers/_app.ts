@@ -3,14 +3,14 @@ import { baseProcedure, createTRPCRouter } from '../init';
 import { inngest } from '@/inngest/client';
 
 export const appRouter = createTRPCRouter({
-  summarize: baseProcedure
+  codeAgent: baseProcedure
     .input(
       z.object({
         value : z.string()
       })
     ).mutation(async ({ input }) => {
       await inngest.send({
-        name: "summarize/text-summarizer.world",
+        name: "code/code.generator",
         data: {
           text : input.value
         }
