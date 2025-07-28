@@ -2,24 +2,25 @@
 
 function ping_server() {
     counter=0
-    response=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:3000")
+    while true; do
+        response=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:3000")
+        
+        if [[ "$response" -eq 200 ]]; then
+            echo "Server is up!"
+            break
+        fi
 
-    while [[ ${response} -ne 200 ]]; do
         ((counter++))
-
         if (( counter % 20 == 0 )); then
             echo "Waiting for server to start..."
         fi
 
         sleep 0.1
-        response=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:3000")
     done
-
-    echo "Server is up!"
 }
 
-
+# Start ping in the background
 ping_server &
 
-cd /home/user && npx next dev --turbo -H 0.0.0.0
-
+# Start the Next.js dev server
+cd /home/user && exec npx next dev --turbo -H 0.0.0.0

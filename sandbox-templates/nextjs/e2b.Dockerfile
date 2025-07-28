@@ -13,13 +13,10 @@ RUN apt-get update && \
 COPY compile_page.sh /compile_page.sh
 RUN chmod +x /compile_page.sh
 
-# Create Next.js app in one step to reduce cache busting
-# npx --yes shadcn@2.6.3 init --yes -b neutral --force && \
-# npx --yes shadcn@2.6.3 add --all --yes && \
+# Create Next.js app and setup ShadCN
 RUN npx --yes create-next-app@15.3.3 nextjs-app --yes && \
     cd nextjs-app && \
     mv ./* ../ && \
-    cd .. && rm -rf nextjs-app
-
-CMD ["npx", "next", "dev", "--turbo", "-H", "0.0.0.0"]
-
+    cd .. && rm -rf nextjs-app && \
+    npx --yes shadcn@2.6.3 init --yes -b neutral --force && \
+    npx --yes shadcn@2.6.3 add --all --yes
