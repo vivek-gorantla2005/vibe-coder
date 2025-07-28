@@ -31,10 +31,7 @@ export const codeAgent = inngest.createFunction(
     }
     // 
     const codingAgent = createAgent({
-      model: openai({
-        model: "gpt-3.5-turbo-1106",
-        apiKey: "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"
-      }),
+      model: openai({model: "gpt-3.5-turbo-1106"}),
       name: "code-agent",
       description: "An expert coding agent",
       system: PROMPT,
